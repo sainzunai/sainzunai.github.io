@@ -11,6 +11,14 @@ Abre `index.html` con doble clic. No hace falta servidor.
 - **Trayectoria, proyectos, hitos y publicaciones:** [assets/js/data.js](assets/js/data.js). Cada elemento es un bloque `{ ... }`; para añadir uno nuevo, copia un bloque existente y cámbialo. Las instrucciones están al principio del fichero.
 - **Sobre mí, "Qué hago", competencias y datos de contacto:** directamente en [index.html](index.html).
 
+## Idiomas (español / inglés)
+
+La web tiene un selector **ES | EN** junto al cargo. Recuerda la elección; la primera vez usa el idioma del navegador (español si está en es/eu/ca/gl, inglés en otro caso). Para enviar un enlace que abra directamente en inglés, añade `?lang=en`: `https://sainzunai.github.io/?lang=en`.
+
+- **Textos de `data.js`:** cada texto lleva sus dos versiones, `{ es: "...", en: "..." }`. Si un texto es igual en los dos idiomas (nombres propios, títulos de pósters), basta con una cadena normal.
+- **Fechas, categorías y etiquetas** (`"Dic 2023 — Actualidad"`, `"Investigación"`, `"Congreso"`): se escriben en español y se traducen solas con el diccionario de [assets/js/i18n.js](assets/js/i18n.js). Si usas una categoría o etiqueta nueva, añade su traducción en `I18N_TERMS_EN`.
+- **Textos fijos de `index.html`:** están en español en el HTML y llevan `data-i18n="clave"`; su versión en inglés está en `I18N_HTML_EN`, dentro de `i18n.js`. Si cambias uno de esos textos, cambia también su traducción.
+
 ## Fotos y vídeos
 
 GitHub no está pensado para guardar fotos pesadas, así que en el repositorio solo hay versiones optimizadas (unos 14 MB en total). Los vídeos se enlazan desde YouTube.
@@ -23,7 +31,7 @@ GitHub no está pensado para guardar fotos pesadas, así que en el repositorio s
   ```
 - **Mostrar las fotos:** lístalas en `photos` dentro de `data.js`. La primera foto es la portada:
   ```js
-  photos: ["01.jpg", { src: "02.jpg", caption: "Montaje de la PCB" }]
+  photos: ["01.jpg", { src: "02.jpg", caption: { es: "Montaje de la PCB", en: "PCB assembly" } }]
   ```
 - **Vídeos de YouTube:** añade `videos: [{ youtube: "DJI5ZQWqFBI", caption: "..." }]`. En local, los vídeos de YouTube solo se ven si la web se sirve por http; al abrir `index.html` con doble clic, YouTube muestra el error 153. En GitHub Pages funcionan.
 

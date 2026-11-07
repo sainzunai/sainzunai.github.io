@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unai Sainz Lugarezaresti · Ingeniero de I+D</title>
-  <meta name="description"
+  <title data-i18n="meta.title">Unai Sainz Lugarezaresti · Ingeniero de I+D</title>
+  <meta name="description" data-i18n-attr="content:meta.description"
     content="Portfolio y CV de Unai Sainz Lugarezaresti, ingeniero electrónico e informático. I+D en neurotecnología, electrónica, datos e IA. Bilbao.">
 
   <!--
@@ -58,11 +58,18 @@
         <div class="info-content">
           <h1 class="name" title="Unai Sainz Lugarezaresti">Unai Sainz Lugarezaresti</h1>
 
-          <p class="title">Ingeniero de I+D</p>
+          <div class="info-tags">
+            <p class="title" data-i18n="sidebar.title">Ingeniero de I+D</p>
+
+            <div class="lang-switch" role="group" aria-label="Idioma" data-i18n-attr="aria-label:lang.label">
+              <button type="button" lang="es" data-lang-btn="es" aria-pressed="true">ES</button>
+              <button type="button" lang="en" data-lang-btn="en" aria-pressed="false">EN</button>
+            </div>
+          </div>
         </div>
 
         <button class="info_more-btn" data-sidebar-btn>
-          <span>Ver contacto</span>
+          <span data-i18n="sidebar.more">Ver contacto</span>
 
           <ion-icon name="chevron-down"></ion-icon>
         </button>
@@ -99,7 +106,7 @@
               <p class="contact-title">LinkedIn</p>
 
               <a href="https://www.linkedin.com/in/unai-sainz-lugarezaresti/" class="contact-link" target="_blank"
-                rel="noopener">Ver perfil</a>
+                rel="noopener" data-i18n="contact.linkedinLink">Ver perfil</a>
             </div>
 
           </li>
@@ -111,9 +118,9 @@
             </div>
 
             <div class="contact-info">
-              <p class="contact-title">Idiomas</p>
+              <p class="contact-title" data-i18n="contact.languages">Idiomas</p>
 
-              <p class="contact-text">Español · Inglés C1 · Euskera B2</p>
+              <p class="contact-text" data-i18n="contact.languagesValue">Español · Inglés C1 · Euskera B2</p>
             </div>
 
           </li>
@@ -125,9 +132,9 @@
             </div>
 
             <div class="contact-info">
-              <p class="contact-title">Ubicación</p>
+              <p class="contact-title" data-i18n="contact.location">Ubicación</p>
 
-              <address>Bilbao y alrededores</address>
+              <address data-i18n="contact.locationValue">Bilbao y alrededores</address>
             </div>
 
           </li>
@@ -176,23 +183,23 @@
         <ul class="navbar-list">
 
           <li class="navbar-item">
-            <a href="#sobre-mi" class="navbar-link  active" data-nav-link>Sobre mí</a>
+            <a href="#sobre-mi" class="navbar-link  active" data-nav-link data-i18n="nav.about">Sobre mí</a>
           </li>
 
           <li class="navbar-item">
-            <a href="#trayectoria" class="navbar-link" data-nav-link>Trayectoria</a>
+            <a href="#trayectoria" class="navbar-link" data-nav-link data-i18n="nav.resume">Trayectoria</a>
           </li>
 
           <li class="navbar-item">
-            <a href="#proyectos" class="navbar-link" data-nav-link>Proyectos</a>
+            <a href="#proyectos" class="navbar-link" data-nav-link data-i18n="nav.projects">Proyectos</a>
           </li>
 
           <li class="navbar-item">
-            <a href="#hitos" class="navbar-link" data-nav-link>Hitos</a>
+            <a href="#hitos" class="navbar-link" data-nav-link data-i18n="nav.milestones">Hitos</a>
           </li>
 
           <li class="navbar-item">
-            <a href="#contacto" class="navbar-link" data-nav-link>Contacto</a>
+            <a href="#contacto" class="navbar-link" data-nav-link data-i18n="nav.contact">Contacto</a>
           </li>
 
         </ul>
@@ -210,18 +217,18 @@
       <article class="about  active" data-page="sobre-mi">
 
         <header>
-          <h2 class="h2 article-title">Sobre mí</h2>
+          <h2 class="h2 article-title" data-i18n="about.title">Sobre mí</h2>
         </header>
 
         <section class="about-text">
-          <p>
+          <p data-i18n="about.p1">
             Soy ingeniero en Electrónica Industrial y Automática y en Informática por la Universidad de Deusto, con un
             Máster en Computación y Sistemas Inteligentes. Me muevo entre el hardware y el software: desde diseñar una
             PCB o la carcasa impresa en 3D de un sensor hasta entrenar modelos de machine learning y construir
             pipelines de análisis de datos.
           </p>
 
-          <p>
+          <p data-i18n="about.p2">
             Actualmente soy ingeniero de I+D en el grupo de Neuroimagen Computacional del IIS Biobizkaia, donde aplico
             tecnología neuromórfica y eye-tracking al estudio de la detección y la rehabilitación del
             Alzheimer y el Parkinson, y realizo mi doctorado en Neurociencias en la Universidad del País Vasco (EHU).
@@ -229,7 +236,7 @@
             Tecnología Electrónica y dirijo Trabajos de Fin de Grado.
           </p>
 
-          <p>
+          <p data-i18n="about.p3">
             Fuera del laboratorio me gusta hacer cosas con las manos: imprimo en 3D, cuido una huerta en mi pueblo y
             me dedico a la fotografía y la edición de vídeo, todo aprendido de forma autodidacta.
           </p>
@@ -242,7 +249,7 @@
 
         <section class="service">
 
-          <h3 class="h3 service-title">Qué hago</h3>
+          <h3 class="h3 service-title" data-i18n="services.title">Qué hago</h3>
 
           <ul class="service-list">
 
@@ -253,9 +260,9 @@
               </div>
 
               <div class="service-content-box">
-                <h4 class="h4 service-item-title">Neurotecnología e investigación</h4>
+                <h4 class="h4 service-item-title" data-i18n="services.neuro.title">Neurotecnología e investigación</h4>
 
-                <p class="service-item-text">
+                <p class="service-item-text" data-i18n="services.neuro.text">
                   Cámaras de eventos (DVS), eye-tracking y sensores biométricos aplicados a
                   enfermedades neurodegenerativas.
                 </p>
@@ -270,9 +277,9 @@
               </div>
 
               <div class="service-content-box">
-                <h4 class="h4 service-item-title">Electrónica y sistemas embebidos</h4>
+                <h4 class="h4 service-item-title" data-i18n="services.electronics.title">Electrónica y sistemas embebidos</h4>
 
-                <p class="service-item-text">
+                <p class="service-item-text" data-i18n="services.electronics.text">
                   Diseño de PCB, integración de sensores con sistemas embebidos y prototipado con CAD e impresión 3D.
                 </p>
               </div>
@@ -286,9 +293,9 @@
               </div>
 
               <div class="service-content-box">
-                <h4 class="h4 service-item-title">Datos e inteligencia artificial</h4>
+                <h4 class="h4 service-item-title" data-i18n="services.data.title">Datos e inteligencia artificial</h4>
 
-                <p class="service-item-text">
+                <p class="service-item-text" data-i18n="services.data.text">
                   Pipelines de análisis en Python, machine learning y redes neuronales, y computación distribuida en el
                   edge.
                 </p>
@@ -303,9 +310,9 @@
               </div>
 
               <div class="service-content-box">
-                <h4 class="h4 service-item-title">Docencia universitaria</h4>
+                <h4 class="h4 service-item-title" data-i18n="services.teaching.title">Docencia universitaria</h4>
 
-                <p class="service-item-text">
+                <p class="service-item-text" data-i18n="services.teaching.text">
                   Electrónica Analógica y Tecnología Electrónica en la Universidad de Deusto, y dirección de Trabajos de
                   Fin de Grado.
                 </p>
@@ -325,10 +332,10 @@
         <section class="featured">
 
           <div class="featured-header">
-            <h3 class="h3">Proyectos destacados</h3>
+            <h3 class="h3" data-i18n="featured.title">Proyectos destacados</h3>
 
             <a href="#proyectos" class="featured-more">
-              <span>Ver todos</span>
+              <span data-i18n="featured.more">Ver todos</span>
               <ion-icon name="arrow-forward-outline"></ion-icon>
             </a>
           </div>
@@ -350,7 +357,7 @@
       <article class="resume" data-page="trayectoria">
 
         <header>
-          <h2 class="h2 article-title">Trayectoria</h2>
+          <h2 class="h2 article-title" data-i18n="resume.title">Trayectoria</h2>
         </header>
 
         <section class="timeline">
@@ -360,7 +367,7 @@
               <ion-icon name="briefcase-outline"></ion-icon>
             </div>
 
-            <h3 class="h3">Experiencia</h3>
+            <h3 class="h3" data-i18n="resume.experience">Experiencia</h3>
           </div>
 
           <ol class="timeline-list" data-timeline="experience"></ol>
@@ -374,7 +381,7 @@
               <ion-icon name="book-outline"></ion-icon>
             </div>
 
-            <h3 class="h3">Formación</h3>
+            <h3 class="h3" data-i18n="resume.education">Formación</h3>
           </div>
 
           <ol class="timeline-list" data-timeline="education"></ol>
@@ -388,7 +395,7 @@
               <ion-icon name="document-text-outline"></ion-icon>
             </div>
 
-            <h3 class="h3">Publicaciones</h3>
+            <h3 class="h3" data-i18n="resume.publications">Publicaciones</h3>
           </div>
 
           <ol class="timeline-list" data-publication-list></ol>
@@ -397,67 +404,67 @@
 
         <section class="skill">
 
-          <h3 class="h3 skills-title">Competencias</h3>
+          <h3 class="h3 skills-title" data-i18n="skills.title">Competencias</h3>
 
           <ul class="skill-groups">
 
             <li class="skill-group">
-              <h4 class="h4 skill-group-title">Electrónica y hardware</h4>
+              <h4 class="h4 skill-group-title" data-i18n="skills.electronics">Electrónica y hardware</h4>
 
               <ul class="chip-list">
-                <li class="chip">Diseño de PCB</li>
-                <li class="chip">Sistemas embebidos</li>
-                <li class="chip">Integración de sensores</li>
-                <li class="chip">Espectroscopía NIR</li>
+                <li class="chip" data-i18n="skills.pcb">Diseño de PCB</li>
+                <li class="chip" data-i18n="skills.embedded">Sistemas embebidos</li>
+                <li class="chip" data-i18n="skills.sensors">Integración de sensores</li>
+                <li class="chip" data-i18n="skills.nir">Espectroscopía NIR</li>
                 <li class="chip">CAD</li>
-                <li class="chip">Impresión 3D</li>
+                <li class="chip" data-i18n="skills.printing">Impresión 3D</li>
               </ul>
             </li>
 
             <li class="skill-group">
-              <h4 class="h4 skill-group-title">Software, datos e IA</h4>
+              <h4 class="h4 skill-group-title" data-i18n="skills.software">Software, datos e IA</h4>
 
               <ul class="chip-list">
                 <li class="chip">Python</li>
-                <li class="chip">Pipelines de datos</li>
+                <li class="chip" data-i18n="skills.pipelines">Pipelines de datos</li>
                 <li class="chip">Machine learning</li>
-                <li class="chip">Redes neuronales</li>
-                <li class="chip">Computación edge</li>
+                <li class="chip" data-i18n="skills.neural">Redes neuronales</li>
+                <li class="chip" data-i18n="skills.edge">Computación edge</li>
                 <li class="chip">C#</li>
-                <li class="chip">Desarrollo web</li>
+                <li class="chip" data-i18n="skills.web">Desarrollo web</li>
               </ul>
             </li>
 
             <li class="skill-group">
-              <h4 class="h4 skill-group-title">Neurotecnología</h4>
+              <h4 class="h4 skill-group-title" data-i18n="skills.neuro">Neurotecnología</h4>
 
               <ul class="chip-list">
-                <li class="chip">Cámaras DVS</li>
+                <li class="chip" data-i18n="skills.dvs">Cámaras DVS</li>
                 <li class="chip">Eye-tracking</li>
-                <li class="chip">Sensores biométricos</li>
+                <li class="chip" data-i18n="skills.biometric">Sensores biométricos</li>
                 <li class="chip">PsychoPy</li>
               </ul>
             </li>
 
             <li class="skill-group">
-              <h4 class="h4 skill-group-title">Ciberseguridad industrial</h4>
+              <h4 class="h4 skill-group-title" data-i18n="skills.cyber">Ciberseguridad industrial</h4>
 
               <ul class="chip-list">
                 <li class="chip">Pentesting</li>
-                <li class="chip">Análisis de vulnerabilidades</li>
+                <li class="chip" data-i18n="skills.vulnerabilities">Análisis de vulnerabilidades</li>
                 <li class="chip">Snort</li>
                 <li class="chip">Modbus</li>
-                <li class="chip">Fortinet NS1 y NS2</li>
+                <li class="chip" data-i18n="skills.fortinet">Fortinet NS1 y NS2</li>
               </ul>
             </li>
 
             <li class="skill-group">
-              <h4 class="h4 skill-group-title">Idiomas</h4>
+              <h4 class="h4 skill-group-title" data-i18n="skills.languages">Idiomas</h4>
 
               <ul class="chip-list">
-                <li class="chip">Español · nativo</li>
-                <li class="chip">Inglés · C1</li>
-                <li class="chip">Euskera · B2</li>
+                <li class="chip" data-i18n="skills.spanish">Español · nativo</li>
+                <li class="chip" data-i18n="skills.english">Inglés · C1</li>
+                <li class="chip" data-i18n="skills.basque">Euskera · B2</li>
               </ul>
             </li>
 
@@ -478,7 +485,7 @@
       <article class="portfolio" data-page="proyectos">
 
         <header>
-          <h2 class="h2 article-title">Proyectos</h2>
+          <h2 class="h2 article-title" data-i18n="projects.title">Proyectos</h2>
         </header>
 
         <section class="projects">
@@ -489,7 +496,7 @@
 
             <button class="filter-select" data-select>
 
-              <div class="select-value" data-selecct-value>Elige una categoría</div>
+              <div class="select-value" data-selecct-value data-i18n="projects.select">Elige una categoría</div>
 
               <div class="select-icon">
                 <ion-icon name="chevron-down"></ion-icon>
@@ -518,7 +525,7 @@
       <article class="blog" data-page="hitos">
 
         <header>
-          <h2 class="h2 article-title">Hitos</h2>
+          <h2 class="h2 article-title" data-i18n="milestones.title">Hitos</h2>
         </header>
 
         <section class="blog-posts">
@@ -540,10 +547,10 @@
       <article class="contact" data-page="contacto">
 
         <header>
-          <h2 class="h2 article-title">Contacto</h2>
+          <h2 class="h2 article-title" data-i18n="contact.title">Contacto</h2>
         </header>
 
-        <p class="contact-intro">Puedes escribirme por correo o contactar conmigo en LinkedIn.</p>
+        <p class="contact-intro" data-i18n="contact.intro">Puedes escribirme por correo o contactar conmigo en LinkedIn.</p>
 
         <ul class="contact-cards">
 
@@ -602,7 +609,7 @@
 
     <section class="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="gallery-title">
 
-      <button class="modal-close-btn" data-gallery-close aria-label="Cerrar">
+      <button class="modal-close-btn" data-gallery-close aria-label="Cerrar" data-i18n-attr="aria-label:gallery.close">
         <ion-icon name="close-outline"></ion-icon>
       </button>
 
@@ -611,11 +618,13 @@
 
         <div class="photo-placeholder" data-gallery-placeholder></div>
 
-        <button class="gallery-nav prev" data-gallery-prev aria-label="Foto anterior">
+        <button class="gallery-nav prev" data-gallery-prev aria-label="Foto anterior"
+          data-i18n-attr="aria-label:gallery.prev">
           <ion-icon name="chevron-back"></ion-icon>
         </button>
 
-        <button class="gallery-nav next" data-gallery-next aria-label="Foto siguiente">
+        <button class="gallery-nav next" data-gallery-next aria-label="Foto siguiente"
+          data-i18n-attr="aria-label:gallery.next">
           <ion-icon name="chevron-forward"></ion-icon>
         </button>
 
@@ -648,6 +657,7 @@
   <!--
     - content and custom js link
   -->
+  <script src="./assets/js/i18n.js"></script>
   <script src="./assets/js/data.js"></script>
   <script src="./assets/js/script.js"></script>
 

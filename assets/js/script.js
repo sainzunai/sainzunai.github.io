@@ -53,7 +53,7 @@ const thumbPath = function (path) {
   return isExternal(path) ? path : path.replace(/([^/]+)$/, "thumbs/$1");
 }
 
-// videos first, then photos, as { type, src, thumb, caption }
+// videos first, then photos, as { type, src, thumb, caption } (captions in the current language)
 const mediaOf = function (id) {
   const { item } = entries[id];
 
@@ -62,18 +62,18 @@ const mediaOf = function (id) {
       type: "youtube",
       src: video.youtube,
       thumb: `https://i.ytimg.com/vi/${encodeURIComponent(video.youtube)}/mqdefault.jpg`,
-      caption: video.caption || ""
+      caption: tr(video.caption)
     }
     : {
       type: "video",
       src: mediaPath(video.src, id),
       thumb: video.poster ? thumbPath(mediaPath(video.poster, id)) : "",
-      caption: video.caption || ""
+      caption: tr(video.caption)
     });
 
   const photos = (item.photos || []).map(photo => {
     const src = mediaPath(typeof photo === "string" ? photo : photo.src, id);
-    return { type: "image", src, thumb: thumbPath(src), caption: typeof photo === "string" ? "" : photo.caption || "" };
+    return { type: "image", src, thumb: thumbPath(src), caption: typeof photo === "string" ? "" : tr(photo.caption) };
   });
 
   return videos.concat(photos);
@@ -87,7 +87,7 @@ const coverOf = function (media) {
 const iconOf = function (id) { return entries[id].item.icon || entries[id].section.icon; }
 
 const placeholderHTML = function (id) {
-  const text = PORTFOLIO.showPhotoPlaceholders ? "<span>Fotos próximamente</span>" : "";
+  const text = PORTFOLIO.showPhotoPlaceholders ? `<span>${escapeHTML(ui("photosSoon"))}</span>` : "";
   return `<ion-icon name="${iconOf(id)}"></ion-icon>${text}`;
 }
 
@@ -107,11 +107,11 @@ const coverHTML = function (id) {
 
   const photoCount = media.filter(m => m.type === "image").length;
   const badges = [
-    media.some(m => m.type !== "image") ? `<span class="badge"><ion-icon name="play"></ion-icon>Vídeo</span>` : "",
+    media.some(m => m.type !== "image") ? `<span class="badge"><ion-icon name="play"></ion-icon>${escapeHTML(ui("video"))}</span>` : "",
     photoCount > 1 ? `<span class="badge"><ion-icon name="camera-outline"></ion-icon>${photoCount}</span>` : ""
   ].join("");
 
-  return `<img src="${cover.thumb}" alt="${escapeHTML(cover.caption || entries[id].item.title)}" loading="lazy">
+  return `<img src="${cover.thumb}" alt="${escapeHTML(cover.caption || tr(entries[id].item.title))}" loading="lazy">
     ${badges ? `<span class="media-badges">${badges}</span>` : ""}`;
 }
 
@@ -134,8 +134,9 @@ const photoStripHTML = function (id) {
 // projects
 const projectCardHTML = function (item, page) {
   const categories = item.categories || [];
-  const meta = [item.date, categories.join(", ")].filter(Boolean).join(" · ");
+  const meta = [trDate(item.date), categories.map(term).join(", ")].filter(Boolean).join(" · ");
 
+  // the filter values are the spanish category names, whatever the language shown
   return `
     <li class="project-item  active" data-filter-item data-category="${escapeHTML(categories.join("|").toLowerCase())}">
       <a href="#${page}/${item.id}">
@@ -150,11 +151,11 @@ const projectCardHTML = function (item, page) {
 
         ${photoStripHTML(item.id)}
 
-        <h3 class="project-title">${escapeHTML(item.title)}</h3>
+        <h3 class="project-title">${escapeHTML(tr(item.title))}</h3>
 
         <p class="project-category">${escapeHTML(meta)}</p>
 
-        <p class="project-text">${escapeHTML(item.summary)}</p>
+        <p class="project-text">${escapeHTML(tr(item.summary))}</p>
 
       </a>
     </li>`;
@@ -164,8 +165,9 @@ const projects = PORTFOLIO.projects || [];
 
 // "2024 — Actualidad" -> [2024, 9999]; "2018" -> [2018, 2018]
 const yearsOf = function (date) {
-  const years = (String(date || "").match(/\d{4}/g) || []).map(Number);
-  const end = /actualidad/i.test(date) ? 9999 : (years[years.length - 1] || 0);
+  const text = date && typeof date === "object" ? date.es : String(date || "");
+  const years = (text.match(/\d{4}/g) || []).map(Number);
+  const end = /actualidad/i.test(text) ? 9999 : (years[years.length - 1] || 0);
   return [years[0] || end, end];
 };
 
@@ -176,173 +178,171 @@ const projectsByDate = projects
   .sort((a, b) => (!!a.item.last - !!b.item.last) || (b.years[1] - a.years[1]) || (b.years[0] - a.years[0]) || (a.i - b.i))
   .map(entry => entry.item);
 
-document.querySelector("[data-project-list]").innerHTML =
-  projectsByDate.map(item => projectCardHTML(item, "proyectos")).join("");
-
-document.querySelector("[data-featured-list]").innerHTML =
-  projects.filter(item => item.featured).map(item => projectCardHTML(item, "sobre-mi")).join("");
-
 // filter buttons are built from the categories used in data.js
 const categories = [...new Set(projects.flatMap(item => item.categories || []))];
-const filterOptions = [{ label: "Todos", value: "all" }]
-  .concat(categories.map(category => ({ label: category, value: category.toLowerCase() })));
 
-document.querySelector("[data-filter-list]").innerHTML = filterOptions.map((option, i) => `
-  <li class="filter-item">
-    <button ${i === 0 ? 'class="active"' : ""} data-filter-btn data-filter-value="${escapeHTML(option.value)}">${escapeHTML(option.label)}</button>
-  </li>`).join("");
+const filterList = document.querySelector("[data-filter-list]");
+const selectList = document.querySelector("[data-select-list]");
 
-document.querySelector("[data-select-list]").innerHTML = filterOptions.map(option => `
-  <li class="select-item">
-    <button data-select-item data-filter-value="${escapeHTML(option.value)}">${escapeHTML(option.label)}</button>
-  </li>`).join("");
+const renderProjects = function () {
+  document.querySelector("[data-project-list]").innerHTML =
+    projectsByDate.map(item => projectCardHTML(item, "proyectos")).join("");
+
+  document.querySelector("[data-featured-list]").innerHTML =
+    projects.filter(item => item.featured).map(item => projectCardHTML(item, "sobre-mi")).join("");
+
+  const filterOptions = [{ label: ui("all"), value: "all" }]
+    .concat(categories.map(category => ({ label: term(category), value: category.toLowerCase() })));
+
+  filterList.innerHTML = filterOptions.map(option => `
+    <li class="filter-item">
+      <button data-filter-btn data-filter-value="${escapeHTML(option.value)}">${escapeHTML(option.label)}</button>
+    </li>`).join("");
+
+  selectList.innerHTML = filterOptions.map(option => `
+    <li class="select-item">
+      <button data-select-item data-filter-value="${escapeHTML(option.value)}">${escapeHTML(option.label)}</button>
+    </li>`).join("");
+}
 
 
 
 // timelines (experience and education)
 const timelineItemHTML = function (item, page) {
   const media = mediaOf(item.id);
+  const title = tr(item.title);
   let gallery = "";
 
   if (media.length) {
     gallery = media.slice(0, 4).map((m, i) => `
-      <a href="#${page}/${item.id}/${i + 1}" class="timeline-photo">${thumbHTML(m, m.caption || item.title)}</a>`).join("");
+      <a href="#${page}/${item.id}/${i + 1}" class="timeline-photo">${thumbHTML(m, m.caption || title)}</a>`).join("");
 
     if (media.length > 4) {
       gallery += `<a href="#${page}/${item.id}/5" class="timeline-photo more">+${media.length - 4}</a>`;
     }
   } else if (item.photos && PORTFOLIO.showPhotoPlaceholders) {
-    gallery = `<span class="timeline-photo empty" title="Fotos próximamente"><ion-icon name="camera-outline"></ion-icon></span>`.repeat(3);
+    gallery = `<span class="timeline-photo empty" title="${escapeHTML(ui("photosSoon"))}"><ion-icon name="camera-outline"></ion-icon></span>`.repeat(3);
   }
 
   return `
     <li class="timeline-item">
 
-      <h4 class="h4 timeline-item-title">${escapeHTML(item.title)}</h4>
+      <h4 class="h4 timeline-item-title">${escapeHTML(title)}</h4>
 
-      ${item.org ? `<p class="timeline-org">${escapeHTML(item.org)}</p>` : ""}
+      ${item.org ? `<p class="timeline-org">${escapeHTML(tr(item.org))}</p>` : ""}
 
-      <span>${escapeHTML(item.date)}</span>
+      <span>${escapeHTML(trDate(item.date))}</span>
 
-      ${item.text ? `<p class="timeline-text">${escapeHTML(item.text)}</p>` : ""}
+      ${item.text ? `<p class="timeline-text">${escapeHTML(tr(item.text))}</p>` : ""}
 
       ${gallery ? `<div class="timeline-photos">${gallery}</div>` : ""}
 
     </li>`;
 }
 
-for (const list of document.querySelectorAll("[data-timeline]")) {
-  const key = list.dataset.timeline;
-  list.innerHTML = (PORTFOLIO[key] || []).map(item => timelineItemHTML(item, sections[key].page)).join("");
+const renderResume = function () {
+  for (const list of document.querySelectorAll("[data-timeline]")) {
+    const key = list.dataset.timeline;
+    list.innerHTML = (PORTFOLIO[key] || []).map(item => timelineItemHTML(item, sections[key].page)).join("");
+  }
+
+  // publications
+  document.querySelector("[data-publication-list]").innerHTML = (PORTFOLIO.publications || []).map(item => {
+    const title = item.url
+      ? `<a href="${escapeHTML(item.url)}" target="_blank" rel="noopener">${escapeHTML(tr(item.title))}<ion-icon name="open-outline"></ion-icon></a>`
+      : escapeHTML(tr(item.title));
+
+    return `
+      <li class="timeline-item">
+
+        <h4 class="h4 timeline-item-title">${title}</h4>
+
+        ${item.venue ? `<p class="timeline-org">${escapeHTML(tr(item.venue))}</p>` : ""}
+
+        <span>${escapeHTML(trDate(item.date))}</span>
+
+      </li>`;
+  }).join("");
 }
-
-// publications
-document.querySelector("[data-publication-list]").innerHTML = (PORTFOLIO.publications || []).map(item => {
-  const title = item.url
-    ? `<a href="${escapeHTML(item.url)}" target="_blank" rel="noopener">${escapeHTML(item.title)}<ion-icon name="open-outline"></ion-icon></a>`
-    : escapeHTML(item.title);
-
-  return `
-    <li class="timeline-item">
-
-      <h4 class="h4 timeline-item-title">${title}</h4>
-
-      ${item.venue ? `<p class="timeline-org">${escapeHTML(item.venue)}</p>` : ""}
-
-      <span>${escapeHTML(item.date)}</span>
-
-    </li>`;
-}).join("");
 
 
 
 // milestones
-document.querySelector("[data-milestone-list]").innerHTML = (PORTFOLIO.milestones || []).map(item => `
-  <li class="blog-post-item">
-    <a href="#hitos/${item.id}">
+const renderMilestones = function () {
+  document.querySelector("[data-milestone-list]").innerHTML = (PORTFOLIO.milestones || []).map(item => `
+    <li class="blog-post-item">
+      <a href="#hitos/${item.id}">
 
-      <figure class="blog-banner-box">
-        ${coverHTML(item.id)}
-      </figure>
+        <figure class="blog-banner-box">
+          ${coverHTML(item.id)}
+        </figure>
 
-      ${photoStripHTML(item.id)}
+        ${photoStripHTML(item.id)}
 
-      <div class="blog-content">
+        <div class="blog-content">
 
-        <div class="blog-meta">
-          <p class="blog-category">${escapeHTML(item.tag)}</p>
+          <div class="blog-meta">
+            <p class="blog-category">${escapeHTML(term(item.tag))}</p>
 
-          <span class="dot"></span>
+            <span class="dot"></span>
 
-          <time>${escapeHTML(item.date)}</time>
+            <time>${escapeHTML(trDate(item.date))}</time>
+          </div>
+
+          <h3 class="h3 blog-item-title">${escapeHTML(tr(item.title))}</h3>
+
+          <p class="blog-text">${escapeHTML(tr(item.text))}</p>
+
         </div>
 
-        <h3 class="h3 blog-item-title">${escapeHTML(item.title)}</h3>
-
-        <p class="blog-text">${escapeHTML(item.text)}</p>
-
-      </div>
-
-    </a>
-  </li>`).join("");
+      </a>
+    </li>`).join("");
+}
 
 
 
-// custom select variables
+// project filters (buttons on large screens, a select on small ones)
 const select = document.querySelector("[data-select]");
-const selectItems = document.querySelectorAll("[data-select-item]");
 const selectValue = document.querySelector("[data-selecct-value]");
-const filterBtn = document.querySelectorAll("[data-filter-btn]");
+
+let currentFilter = "all";
+let filterChosen = false;
+
+const applyFilter = function () {
+  for (const item of document.querySelectorAll("[data-project-list] [data-filter-item]")) {
+    const itemCategories = item.dataset.category.split("|");
+    item.classList.toggle("active", currentFilter === "all" || itemCategories.includes(currentFilter));
+  }
+
+  for (const btn of filterList.querySelectorAll("[data-filter-btn]")) {
+    btn.classList.toggle("active", btn.dataset.filterValue === currentFilter);
+  }
+
+  // until a category is chosen, the select keeps its "choose a category" text
+  const chosen = [...filterList.querySelectorAll("[data-filter-btn]")].find(btn => btn.dataset.filterValue === currentFilter);
+  if (filterChosen && chosen) selectValue.innerText = chosen.innerText;
+}
+
+const chooseFilter = function (value) {
+  currentFilter = value;
+  filterChosen = true;
+  applyFilter();
+}
 
 select.addEventListener("click", function () { elementToggleFunc(this); });
 
-// add event in all select items
-for (let i = 0; i < selectItems.length; i++) {
-  selectItems[i].addEventListener("click", function () {
+selectList.addEventListener("click", function (event) {
+  const btn = event.target.closest("[data-select-item]");
+  if (!btn) return;
 
-    selectValue.innerText = this.innerText;
-    elementToggleFunc(select);
-    filterFunc(this.dataset.filterValue);
+  elementToggleFunc(select);
+  chooseFilter(btn.dataset.filterValue);
+});
 
-  });
-}
-
-// filter variables
-const filterItems = document.querySelectorAll("[data-project-list] [data-filter-item]");
-
-const filterFunc = function (selectedValue) {
-
-  for (let i = 0; i < filterItems.length; i++) {
-
-    const itemCategories = filterItems[i].dataset.category.split("|");
-
-    if (selectedValue === "all" || itemCategories.includes(selectedValue)) {
-      filterItems[i].classList.add("active");
-    } else {
-      filterItems[i].classList.remove("active");
-    }
-
-  }
-
-}
-
-// add event in all filter button items for large screen
-let lastClickedBtn = filterBtn[0];
-
-for (let i = 0; i < filterBtn.length; i++) {
-
-  filterBtn[i].addEventListener("click", function () {
-
-    selectValue.innerText = this.innerText;
-    filterFunc(this.dataset.filterValue);
-
-    lastClickedBtn.classList.remove("active");
-    this.classList.add("active");
-    lastClickedBtn = this;
-
-  });
-
-}
+filterList.addEventListener("click", function (event) {
+  const btn = event.target.closest("[data-filter-btn]");
+  if (btn) chooseFilter(btn.dataset.filterValue);
+});
 
 
 
@@ -365,6 +365,7 @@ const galleryLinks = document.querySelector("[data-gallery-links]");
 
 let galleryMedia = [];
 let galleryIndex = 0;
+let galleryId = "";
 
 const showMedia = function (index) {
   galleryIndex = (index + galleryMedia.length) % galleryMedia.length;
@@ -374,7 +375,7 @@ const showMedia = function (index) {
   // replacing the content also stops a video that was playing
   if (media.type === "youtube") {
     galleryFrame.innerHTML = `
-      <iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(media.src)}?rel=0" title="${label}"
+      <iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(media.src)}?rel=0&hl=${lang}" title="${label}"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
   } else if (media.type === "video") {
@@ -399,19 +400,20 @@ const showMedia = function (index) {
 const openGallery = function (id, index) {
   const { item } = entries[id];
 
+  galleryId = id;
   galleryMedia = mediaOf(id);
 
   const hasMedia = galleryMedia.length > 0;
   const hasMany = galleryMedia.length > 1;
 
-  galleryMeta.textContent = [item.org || item.tag || (item.categories || []).join(", "), item.date]
+  galleryMeta.textContent = [tr(item.org) || term(item.tag) || (item.categories || []).map(term).join(", "), trDate(item.date)]
     .filter(Boolean).join(" · ");
-  galleryTitle.textContent = item.title;
-  galleryText.textContent = item.text || item.summary || "";
+  galleryTitle.textContent = tr(item.title);
+  galleryText.textContent = tr(item.text) || tr(item.summary);
   galleryLinks.innerHTML = (item.links || []).map(link => `
     <a href="${escapeHTML(link.url)}" class="gallery-link" target="_blank" rel="noopener">
       <ion-icon name="${escapeHTML(link.icon || "open-outline")}"></ion-icon>
-      <span>${escapeHTML(link.label)}</span>
+      <span>${escapeHTML(tr(link.label))}</span>
     </a>`).join("");
 
   galleryStage.hidden = !hasMedia && !PORTFOLIO.showPhotoPlaceholders;
@@ -425,7 +427,7 @@ const openGallery = function (id, index) {
   galleryThumbs.hidden = !hasMany;
   galleryThumbs.innerHTML = hasMany ? galleryMedia.map((m, i) => `
     <li>
-      <button data-gallery-thumb="${i}" aria-label="${m.type === "image" ? "Foto" : "Vídeo"} ${i + 1}">${thumbHTML(m)}</button>
+      <button data-gallery-thumb="${i}" aria-label="${escapeHTML(ui(m.type === "image" ? "photo" : "video"))} ${i + 1}">${thumbHTML(m)}</button>
     </li>`).join("") : "";
 
   galleryContainer.classList.add("active");
@@ -441,6 +443,7 @@ const hideGallery = function () {
   galleryContainer.classList.remove("active");
   galleryOverlay.classList.remove("active");
   galleryFrame.innerHTML = "";
+  galleryId = "";
   document.body.style.overflow = "";
 }
 
@@ -467,6 +470,39 @@ document.addEventListener("keydown", function (event) {
   if (galleryMedia.length > 1 && event.key === "ArrowLeft") showMedia(galleryIndex - 1);
   if (galleryMedia.length > 1 && event.key === "ArrowRight") showMedia(galleryIndex + 1);
 });
+
+
+
+// language: fixed texts of the html, then everything that comes from data.js
+const langButtons = document.querySelectorAll("[data-lang-btn]");
+
+const setLanguage = function (newLang) {
+  lang = LANGUAGES.includes(newLang) ? newLang : "es";
+
+  applyStaticTexts();
+  renderProjects();
+  applyFilter();
+  renderResume();
+  renderMilestones();
+
+  for (const btn of langButtons) {
+    btn.setAttribute("aria-pressed", String(btn.dataset.langBtn === lang));
+  }
+
+  // an open gallery is shown again in the new language, at the same photo
+  if (galleryId) openGallery(galleryId, galleryIndex);
+}
+
+for (const btn of langButtons) {
+  btn.addEventListener("click", function () {
+    if (this.dataset.langBtn === lang) return;
+
+    setLanguage(this.dataset.langBtn);
+    saveLanguage();
+  });
+}
+
+setLanguage(detectLanguage());
 
 
 
