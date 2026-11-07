@@ -52,7 +52,7 @@
       <div class="sidebar-info">
 
         <figure class="avatar-box">
-          <img src="./assets/images/avatar.svg" alt="Unai Sainz Lugarezaresti" width="80">
+          <img src="./assets/images/perfil.jpg" alt="Unai Sainz Lugarezaresti" width="80">
         </figure>
 
         <div class="info-content">
@@ -146,13 +146,6 @@
           </li>
 
           <li class="social-item">
-            <a href="https://www.flickr.com/photos/187896384@N06/" class="social-link" target="_blank" rel="noopener"
-              aria-label="Flickr">
-              <ion-icon name="logo-flickr"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
             <a href="mailto:unailuga@gmail.com" class="social-link" aria-label="Email">
               <ion-icon name="mail-outline"></ion-icon>
             </a>
@@ -230,10 +223,15 @@
 
           <p>
             Actualmente soy ingeniero de I+D en el grupo de Neuroimagen Computacional del IIS Biobizkaia, donde aplico
-            tecnología neuromórfica, eye-tracking y realidad virtual al estudio de la detección y la rehabilitación del
+            tecnología neuromórfica y eye-tracking al estudio de la detección y la rehabilitación del
             Alzheimer y el Parkinson, y realizo mi doctorado en Neurociencias en la Universidad del País Vasco (EHU).
             También soy profesor colaborador en la Universidad de Deusto, donde imparto Electrónica Analógica y
             Tecnología Electrónica y dirijo Trabajos de Fin de Grado.
+          </p>
+
+          <p>
+            Fuera del laboratorio me gusta hacer cosas con las manos: imprimo en 3D, cuido una huerta en mi pueblo y
+            me dedico a la fotografía y la edición de vídeo, todo aprendido de forma autodidacta.
           </p>
         </section>
 
@@ -258,7 +256,7 @@
                 <h4 class="h4 service-item-title">Neurotecnología e investigación</h4>
 
                 <p class="service-item-text">
-                  Cámaras de eventos (DVS), eye-tracking, realidad virtual y sensores biométricos aplicados a
+                  Cámaras de eventos (DVS), eye-tracking y sensores biométricos aplicados a
                   enfermedades neurodegenerativas.
                 </p>
               </div>
@@ -436,7 +434,6 @@
               <ul class="chip-list">
                 <li class="chip">Cámaras DVS</li>
                 <li class="chip">Eye-tracking</li>
-                <li class="chip">Realidad virtual</li>
                 <li class="chip">Sensores biométricos</li>
                 <li class="chip">PsychoPy</li>
               </ul>
@@ -546,42 +543,44 @@
           <h2 class="h2 article-title">Contacto</h2>
         </header>
 
-        <section class="mapbox" data-mapbox>
-          <figure>
-            <iframe
-              src="https://www.openstreetmap.org/export/embed.html?bbox=-3.12%2C43.18%2C-2.76%2C43.40&amp;layer=mapnik"
-              width="400" height="300" loading="lazy" title="Mapa de Bilbao y alrededores"></iframe>
-          </figure>
-        </section>
+        <p class="contact-intro">Puedes escribirme por correo o contactar conmigo en LinkedIn.</p>
 
-        <section class="contact-form">
+        <ul class="contact-cards">
 
-          <h3 class="h3 form-title">Escríbeme</h3>
+          <li>
+            <a href="mailto:unailuga@gmail.com" class="contact-card">
 
-          <p class="form-text">
-            Al enviar se abrirá tu programa de correo con el mensaje ya preparado. También puedes escribirme
-            directamente a <a href="mailto:unailuga@gmail.com">unailuga@gmail.com</a> o por
-            <a href="https://www.linkedin.com/in/unai-sainz-lugarezaresti/" target="_blank" rel="noopener">LinkedIn</a>.
-          </p>
+              <div class="icon-box">
+                <ion-icon name="mail-outline"></ion-icon>
+              </div>
 
-          <form action="#" class="form" data-form>
+              <div>
+                <p class="contact-title">Email</p>
 
-            <div class="input-wrapper">
-              <input type="text" name="fullname" class="form-input" placeholder="Nombre" required data-form-input>
+                <p class="contact-card-value">unailuga@gmail.com</p>
+              </div>
 
-              <input type="email" name="email" class="form-input" placeholder="Email" required data-form-input>
-            </div>
+            </a>
+          </li>
 
-            <textarea name="message" class="form-input" placeholder="Tu mensaje" required data-form-input></textarea>
+          <li>
+            <a href="https://www.linkedin.com/in/unai-sainz-lugarezaresti/" class="contact-card" target="_blank"
+              rel="noopener">
 
-            <button class="form-btn" type="submit" disabled data-form-btn>
-              <ion-icon name="paper-plane"></ion-icon>
-              <span>Enviar mensaje</span>
-            </button>
+              <div class="icon-box">
+                <ion-icon name="logo-linkedin"></ion-icon>
+              </div>
 
-          </form>
+              <div>
+                <p class="contact-title">LinkedIn</p>
 
-        </section>
+                <p class="contact-card-value">unai-sainz-lugarezaresti</p>
+              </div>
+
+            </a>
+          </li>
+
+        </ul>
 
       </article>
 
@@ -608,7 +607,7 @@
       </button>
 
       <figure class="gallery-stage" data-gallery-stage>
-        <img src="" alt="" data-gallery-img>
+        <div class="gallery-media" data-gallery-media></div>
 
         <div class="photo-placeholder" data-gallery-placeholder></div>
 
@@ -620,7 +619,7 @@
           <ion-icon name="chevron-forward"></ion-icon>
         </button>
 
-        <span class="photo-count" data-gallery-counter></span>
+        <span class="badge gallery-counter" data-gallery-counter></span>
       </figure>
 
       <p class="gallery-caption" data-gallery-caption></p>

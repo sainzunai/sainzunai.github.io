@@ -40,18 +40,48 @@ for (const key in sections) {
   }
 }
 
-// resolve the photo list of an item to { src, caption }
-const photosOf = function (id) {
-  const { item, section } = entries[id];
+const isExternal = function (src) { return /^(https?:)?\/\//.test(src); }
 
-  return (item.photos || []).map(photo => {
-    const src = typeof photo === "string" ? photo : photo.src;
+// bare file names live in the item's folder; paths with "/" are relative to assets/images
+const mediaPath = function (src, id) {
+  if (isExternal(src)) return src;
+  return `./assets/images/${src.includes("/") ? src : `${entries[id].section.folder}/${id}/${src}`}`;
+}
 
-    return {
-      src: src.includes("/") ? src : `./assets/images/${section.folder}/${id}/${src}`,
-      caption: typeof photo === "string" ? "" : photo.caption || ""
-    };
+// every photo has a smaller copy in a "thumbs" folder next to it
+const thumbPath = function (path) {
+  return isExternal(path) ? path : path.replace(/([^/]+)$/, "thumbs/$1");
+}
+
+// videos first, then photos, as { type, src, thumb, caption }
+const mediaOf = function (id) {
+  const { item } = entries[id];
+
+  const videos = (item.videos || []).map(video => video.youtube
+    ? {
+      type: "youtube",
+      src: video.youtube,
+      thumb: `https://i.ytimg.com/vi/${encodeURIComponent(video.youtube)}/mqdefault.jpg`,
+      caption: video.caption || ""
+    }
+    : {
+      type: "video",
+      src: mediaPath(video.src, id),
+      thumb: video.poster ? thumbPath(mediaPath(video.poster, id)) : "",
+      caption: video.caption || ""
+    });
+
+  const photos = (item.photos || []).map(photo => {
+    const src = mediaPath(typeof photo === "string" ? photo : photo.src, id);
+    return { type: "image", src, thumb: thumbPath(src), caption: typeof photo === "string" ? "" : photo.caption || "" };
   });
+
+  return videos.concat(photos);
+}
+
+// the cover is the first photo, or a video frame when there are no photos
+const coverOf = function (media) {
+  return media.find(m => m.type === "image") || media.find(m => m.thumb);
 }
 
 const iconOf = function (id) { return entries[id].item.icon || entries[id].section.icon; }
@@ -61,29 +91,42 @@ const placeholderHTML = function (id) {
   return `<ion-icon name="${iconOf(id)}"></ion-icon>${text}`;
 }
 
-// cover photo (or placeholder) plus a counter when there is more than one photo
-const coverHTML = function (id) {
-  const photos = photosOf(id);
-
-  if (!photos.length) return `<div class="photo-placeholder">${placeholderHTML(id)}</div>`;
-
-  const alt = escapeHTML(photos[0].caption || entries[id].item.title);
-  const count = photos.length > 1
-    ? `<span class="photo-count"><ion-icon name="camera-outline"></ion-icon>${photos.length}</span>`
-    : "";
-
-  return `<img src="${photos[0].src}" alt="${alt}" loading="lazy">${count}`;
+// small image with a play icon on top when it is a video
+const thumbHTML = function (media, alt) {
+  const img = media.thumb ? `<img src="${media.thumb}" alt="${escapeHTML(alt || "")}" loading="lazy">` : "";
+  const play = media.type === "image" ? "" : `<ion-icon name="play" class="play-icon"></ion-icon>`;
+  return img + play;
 }
 
-// small strip with the next photos, so it is clear at a glance that there are more
+// cover photo (or placeholder) plus badges for videos and the number of photos
+const coverHTML = function (id) {
+  const media = mediaOf(id);
+  const cover = coverOf(media);
+
+  if (!cover) return `<div class="photo-placeholder">${placeholderHTML(id)}</div>`;
+
+  const photoCount = media.filter(m => m.type === "image").length;
+  const badges = [
+    media.some(m => m.type !== "image") ? `<span class="badge"><ion-icon name="play"></ion-icon>Vídeo</span>` : "",
+    photoCount > 1 ? `<span class="badge"><ion-icon name="camera-outline"></ion-icon>${photoCount}</span>` : ""
+  ].join("");
+
+  return `<img src="${cover.thumb}" alt="${escapeHTML(cover.caption || entries[id].item.title)}" loading="lazy">
+    ${badges ? `<span class="media-badges">${badges}</span>` : ""}`;
+}
+
+// small strip with the rest of the media, so it is clear at a glance that there is more
 const photoStripHTML = function (id) {
-  const photos = photosOf(id);
-  if (photos.length < 2) return "";
+  const media = mediaOf(id);
+  const cover = coverOf(media);
+  const rest = media.filter(m => m !== cover);
 
-  const thumbs = photos.slice(1, 4).map(photo => `<img src="${photo.src}" alt="" loading="lazy">`).join("");
-  const more = photos.length > 4 ? `<span class="more">+${photos.length - 4}</span>` : "";
+  if (!rest.length) return "";
 
-  return `<div class="photo-strip">${thumbs}${more}</div>`;
+  const items = rest.slice(0, 3).map(m => `<span class="strip-item">${thumbHTML(m)}</span>`).join("");
+  const more = rest.length > 3 ? `<span class="strip-item more">+${rest.length - 3}</span>` : "";
+
+  return `<div class="photo-strip">${items}${more}</div>`;
 }
 
 
@@ -119,8 +162,22 @@ const projectCardHTML = function (item, page) {
 
 const projects = PORTFOLIO.projects || [];
 
+// "2024 — Actualidad" -> [2024, 9999]; "2018" -> [2018, 2018]
+const yearsOf = function (date) {
+  const years = (String(date || "").match(/\d{4}/g) || []).map(Number);
+  const end = /actualidad/i.test(date) ? 9999 : (years[years.length - 1] || 0);
+  return [years[0] || end, end];
+};
+
+// Proyectos tab: most recent first (by end year, then start year); "last: true" goes to the end;
+// featured keep the data.js order
+const projectsByDate = projects
+  .map((item, i) => ({ item, i, years: yearsOf(item.date) }))
+  .sort((a, b) => (!!a.item.last - !!b.item.last) || (b.years[1] - a.years[1]) || (b.years[0] - a.years[0]) || (a.i - b.i))
+  .map(entry => entry.item);
+
 document.querySelector("[data-project-list]").innerHTML =
-  projects.map(item => projectCardHTML(item, "proyectos")).join("");
+  projectsByDate.map(item => projectCardHTML(item, "proyectos")).join("");
 
 document.querySelector("[data-featured-list]").innerHTML =
   projects.filter(item => item.featured).map(item => projectCardHTML(item, "sobre-mi")).join("");
@@ -144,17 +201,15 @@ document.querySelector("[data-select-list]").innerHTML = filterOptions.map(optio
 
 // timelines (experience and education)
 const timelineItemHTML = function (item, page) {
-  const photos = photosOf(item.id);
+  const media = mediaOf(item.id);
   let gallery = "";
 
-  if (photos.length) {
-    gallery = photos.slice(0, 4).map((photo, i) => `
-      <a href="#${page}/${item.id}/${i + 1}" class="timeline-photo">
-        <img src="${photo.src}" alt="${escapeHTML(photo.caption || item.title)}" loading="lazy">
-      </a>`).join("");
+  if (media.length) {
+    gallery = media.slice(0, 4).map((m, i) => `
+      <a href="#${page}/${item.id}/${i + 1}" class="timeline-photo">${thumbHTML(m, m.caption || item.title)}</a>`).join("");
 
-    if (photos.length > 4) {
-      gallery += `<a href="#${page}/${item.id}/5" class="timeline-photo more">+${photos.length - 4}</a>`;
+    if (media.length > 4) {
+      gallery += `<a href="#${page}/${item.id}/5" class="timeline-photo more">+${media.length - 4}</a>`;
     }
   } else if (item.photos && PORTFOLIO.showPhotoPlaceholders) {
     gallery = `<span class="timeline-photo empty" title="Fotos próximamente"><ion-icon name="camera-outline"></ion-icon></span>`.repeat(3);
@@ -296,7 +351,7 @@ const galleryContainer = document.querySelector("[data-gallery-container]");
 const galleryOverlay = document.querySelector("[data-gallery-overlay]");
 const galleryCloseBtn = document.querySelector("[data-gallery-close]");
 const galleryStage = document.querySelector("[data-gallery-stage]");
-const galleryImg = document.querySelector("[data-gallery-img]");
+const galleryFrame = document.querySelector("[data-gallery-media]");
 const galleryPlaceholder = document.querySelector("[data-gallery-placeholder]");
 const galleryPrev = document.querySelector("[data-gallery-prev]");
 const galleryNext = document.querySelector("[data-gallery-next]");
@@ -308,18 +363,29 @@ const galleryTitle = document.querySelector("[data-gallery-title]");
 const galleryText = document.querySelector("[data-gallery-text]");
 const galleryLinks = document.querySelector("[data-gallery-links]");
 
-let galleryPhotos = [];
+let galleryMedia = [];
 let galleryIndex = 0;
 
-const showPhoto = function (index) {
-  galleryIndex = (index + galleryPhotos.length) % galleryPhotos.length;
-  const photo = galleryPhotos[galleryIndex];
+const showMedia = function (index) {
+  galleryIndex = (index + galleryMedia.length) % galleryMedia.length;
+  const media = galleryMedia[galleryIndex];
+  const label = escapeHTML(media.caption || galleryTitle.textContent);
 
-  galleryImg.src = photo.src;
-  galleryImg.alt = photo.caption || galleryTitle.textContent;
-  galleryCaption.textContent = photo.caption;
-  galleryCaption.hidden = !photo.caption;
-  galleryCounter.textContent = `${galleryIndex + 1} / ${galleryPhotos.length}`;
+  // replacing the content also stops a video that was playing
+  if (media.type === "youtube") {
+    galleryFrame.innerHTML = `
+      <iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(media.src)}?rel=0" title="${label}"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+  } else if (media.type === "video") {
+    galleryFrame.innerHTML = `<video src="${media.src}" controls preload="metadata"></video>`;
+  } else {
+    galleryFrame.innerHTML = `<img src="${media.src}" alt="${label}">`;
+  }
+
+  galleryCaption.textContent = media.caption;
+  galleryCaption.hidden = !media.caption;
+  galleryCounter.textContent = `${galleryIndex + 1} / ${galleryMedia.length}`;
 
   const thumbs = galleryThumbs.querySelectorAll("button");
 
@@ -333,10 +399,10 @@ const showPhoto = function (index) {
 const openGallery = function (id, index) {
   const { item } = entries[id];
 
-  galleryPhotos = photosOf(id);
+  galleryMedia = mediaOf(id);
 
-  const hasPhotos = galleryPhotos.length > 0;
-  const hasMany = galleryPhotos.length > 1;
+  const hasMedia = galleryMedia.length > 0;
+  const hasMany = galleryMedia.length > 1;
 
   galleryMeta.textContent = [item.org || item.tag || (item.categories || []).join(", "), item.date]
     .filter(Boolean).join(" · ");
@@ -348,26 +414,25 @@ const openGallery = function (id, index) {
       <span>${escapeHTML(link.label)}</span>
     </a>`).join("");
 
-  galleryStage.hidden = !hasPhotos && !PORTFOLIO.showPhotoPlaceholders;
-  galleryImg.hidden = !hasPhotos;
-  galleryPlaceholder.hidden = hasPhotos;
+  galleryStage.hidden = !hasMedia && !PORTFOLIO.showPhotoPlaceholders;
+  galleryFrame.hidden = !hasMedia;
+  galleryFrame.innerHTML = "";
+  galleryPlaceholder.hidden = hasMedia;
   galleryPlaceholder.innerHTML = placeholderHTML(id);
   galleryPrev.hidden = galleryNext.hidden = galleryCounter.hidden = !hasMany;
   galleryCaption.hidden = true;
 
   galleryThumbs.hidden = !hasMany;
-  galleryThumbs.innerHTML = hasMany ? galleryPhotos.map((photo, i) => `
+  galleryThumbs.innerHTML = hasMany ? galleryMedia.map((m, i) => `
     <li>
-      <button data-gallery-thumb="${i}" aria-label="Foto ${i + 1}">
-        <img src="${photo.src}" alt="" loading="lazy">
-      </button>
+      <button data-gallery-thumb="${i}" aria-label="${m.type === "image" ? "Foto" : "Vídeo"} ${i + 1}">${thumbHTML(m)}</button>
     </li>`).join("") : "";
 
   galleryContainer.classList.add("active");
   galleryOverlay.classList.add("active");
   document.body.style.overflow = "hidden";
 
-  if (hasPhotos) showPhoto(Math.min(Math.max(index, 0), galleryPhotos.length - 1));
+  if (hasMedia) showMedia(Math.min(Math.max(index, 0), galleryMedia.length - 1));
 
   galleryCloseBtn.focus();
 }
@@ -375,6 +440,7 @@ const openGallery = function (id, index) {
 const hideGallery = function () {
   galleryContainer.classList.remove("active");
   galleryOverlay.classList.remove("active");
+  galleryFrame.innerHTML = "";
   document.body.style.overflow = "";
 }
 
@@ -386,52 +452,20 @@ const closeGallery = function () {
 
 galleryCloseBtn.addEventListener("click", closeGallery);
 galleryOverlay.addEventListener("click", closeGallery);
-galleryPrev.addEventListener("click", function () { showPhoto(galleryIndex - 1); });
-galleryNext.addEventListener("click", function () { showPhoto(galleryIndex + 1); });
+galleryPrev.addEventListener("click", function () { showMedia(galleryIndex - 1); });
+galleryNext.addEventListener("click", function () { showMedia(galleryIndex + 1); });
 
 galleryThumbs.addEventListener("click", function (event) {
   const thumb = event.target.closest("[data-gallery-thumb]");
-  if (thumb) showPhoto(Number(thumb.dataset.galleryThumb));
+  if (thumb) showMedia(Number(thumb.dataset.galleryThumb));
 });
 
 document.addEventListener("keydown", function (event) {
   if (!galleryContainer.classList.contains("active")) return;
 
   if (event.key === "Escape") closeGallery();
-  if (galleryPhotos.length > 1 && event.key === "ArrowLeft") showPhoto(galleryIndex - 1);
-  if (galleryPhotos.length > 1 && event.key === "ArrowRight") showPhoto(galleryIndex + 1);
-});
-
-
-
-// contact form variables
-const form = document.querySelector("[data-form]");
-const formInputs = document.querySelectorAll("[data-form-input]");
-const formBtn = document.querySelector("[data-form-btn]");
-
-// add event to all form input field
-for (let i = 0; i < formInputs.length; i++) {
-  formInputs[i].addEventListener("input", function () {
-
-    // check form validation
-    if (form.checkValidity()) {
-      formBtn.removeAttribute("disabled");
-    } else {
-      formBtn.setAttribute("disabled", "");
-    }
-
-  });
-}
-
-// github pages has no backend: open the visitor's mail app with the message ready
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  const data = new FormData(form);
-  const subject = `Contacto desde el portfolio · ${data.get("fullname")}`;
-  const body = `${data.get("message")}\n\n${data.get("fullname")} · ${data.get("email")}`;
-
-  window.location.href = `mailto:${PORTFOLIO.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  if (galleryMedia.length > 1 && event.key === "ArrowLeft") showMedia(galleryIndex - 1);
+  if (galleryMedia.length > 1 && event.key === "ArrowRight") showMedia(galleryIndex + 1);
 });
 
 
@@ -442,9 +476,9 @@ const pages = document.querySelectorAll("[data-page]");
 
 let currentPage = "";
 
-// the url hash decides what is shown: #page, #page/item-id or #page/item-id/photo-number
+// the url hash decides what is shown: #page, #page/item-id or #page/item-id/media-number
 const route = function () {
-  const [pageName, id, photo] = decodeURIComponent(location.hash.slice(1)).split("/");
+  const [pageName, id, mediaNumber] = decodeURIComponent(location.hash.slice(1)).split("/");
   const page = [...pages].some(p => p.dataset.page === pageName) ? pageName : pages[0].dataset.page;
 
   if (page !== currentPage) {
@@ -460,7 +494,7 @@ const route = function () {
   }
 
   if (id && entries[id]) {
-    openGallery(id, (parseInt(photo) || 1) - 1);
+    openGallery(id, (parseInt(mediaNumber) || 1) - 1);
   } else {
     hideGallery();
   }

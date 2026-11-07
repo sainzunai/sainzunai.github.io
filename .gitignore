@@ -1,2 +1,5 @@
-# fotos sin optimizar: solo se publican las versiones reducidas de assets/images
-fotos-originales/
+# copia local de las fotos originales (pesan demasiado para GitHub)
+input_figuras/
+
+# miniatura de la foto de perfil que genera el script; la web no la usa
+/assets/images/thumbs/
