@@ -46,7 +46,7 @@ const PORTFOLIO = {
   experience: [
     {
       id: "biobizkaia",
-      title: { es: "Ingeniero de Investigación y Desarrollo", en: "Research and Development Engineer" },
+      title: { es: "Ingeniero de I+D (Técnico de apoyo a la investigación)", en: "R&D Engineer (Research Support Technician)" },
       org: { es: "IIS Biobizkaia · Grupo de Neuroimagen Computacional", en: "IIS Biobizkaia · Computational Neuroimaging Group" },
       date: "Dic 2023 — Actualidad",
       text: {
@@ -55,13 +55,16 @@ const PORTFOLIO = {
       },
       photos: [
         { src: "proyectos/begitrack/01.jpg", caption: { es: "Probando el prototipo de BEGITRACK", en: "Testing the BEGITRACK prototype" } },
+        { src: "proyectos/begifov/01.jpg", caption: { es: "Pruebas de BegiFOV junto al equipo OCT", en: "Testing BegiFOV with the OCT device" } },
         { src: "proyectos/begibraintool/01.jpg", caption: { es: "Puesto de evaluación con BegiBrainTool", en: "Assessment setup with BegiBrainTool" } },
+        { src: "proyectos/begitrack/02.jpg", caption: { es: "Estructura de BEGITRACK: perfiles de aluminio y piezas impresas en 3D", en: "BEGITRACK structure: aluminum profiles and 3D-printed parts" } },
+        { src: "proyectos/begifov/02.jpg", caption: { es: "Electrónica de BegiFOV: ESP32-S3, dos pantallas OLED y encoder", en: "BegiFOV electronics: ESP32-S3, two OLED displays and an encoder" } },
+        { src: "proyectos/begitrack/04.jpg", caption: { es: "Diseño CAD del soporte de la cámara de BEGITRACK", en: "CAD design of the BEGITRACK camera mount" } },
         { src: "hitos/aaic-2026/01.jpg", caption: { es: "Póster en AAIC 2026 (Londres)", en: "Poster at AAIC 2026 (London)" } },
         { src: "hitos/ohbm-2026/01.jpg", caption: { es: "Póster en OHBM 2026 (Burdeos)", en: "Poster at OHBM 2026 (Bordeaux)" } },
         { src: "proyectos/begibraintool/03.jpg", caption: { es: "Ponencia sobre BegiBrainTool en el Hospital Universitario de Basurto", en: "Talk on BegiBrainTool at Basurto University Hospital" } },
         { src: "hitos/brainmodes-2024/01.jpg", caption: { es: "BrainModes 2024, conferencia que ayudé a organizar", en: "BrainModes 2024, a conference I helped organize" } },
-        { src: "hitos/aaic-2025/01.jpg", caption: { es: "Póster en AAIC 2025 (Toronto)", en: "Poster at AAIC 2025 (Toronto)" } },
-        { src: "proyectos/begifov/02.jpg", caption: { es: "Electrónica del prototipo BegiFOV", en: "Electronics of the BegiFOV prototype" } }
+        { src: "hitos/aaic-2025/01.jpg", caption: { es: "Póster en AAIC 2025 (Toronto)", en: "Poster at AAIC 2025 (Toronto)" } }
       ]
     },
     {
@@ -70,11 +73,12 @@ const PORTFOLIO = {
       org: { es: "Universidad de Deusto", en: "University of Deusto" },
       date: "Ene 2024 — Actualidad",
       text: {
-        es: "Docente titular de Electrónica Analógica (Grado en Ingeniería Biomédica) y Tecnología Electrónica (Robótica, ITI y Electrónica). Director de múltiples Trabajos de Fin de Grado en distintas titulaciones.",
-        en: "Lecturer in charge of Analog Electronics (Biomedical Engineering degree) and Electronic Technology (Robotics, Industrial Technology Engineering and Electronics degrees). Supervisor of many bachelor's theses across several degrees."
+        es: "Docente titular de Electrónica Analógica (Grado en Ingeniería Biomédica) y Tecnología Electrónica (Robótica, ITI y Electrónica). Director de múltiples Trabajos de Fin de Grado en distintas titulaciones. En Electrónica Analógica, el alumnado diseña, simula y monta circuitos que captan y procesan señales biológicas reales, como el pulso cardiaco; lo conté en un artículo de la revista Deusto Ingeniería.",
+        en: "Lecturer in charge of Analog Electronics (Biomedical Engineering degree) and Electronic Technology (Robotics, Industrial Technology Engineering and Electronics degrees). Supervisor of many bachelor's theses across several degrees. In Analog Electronics, students design, simulate and build circuits that capture and process real biological signals, such as the heart pulse; I wrote about it in an article in Deusto Ingeniería magazine."
       },
       photos: [
-        { src: "01.jpg", caption: { es: "Visita de estudiantes del máster MDIT al IIS Biobizkaia", en: "Visit of MDIT master's students to IIS Biobizkaia" } }
+        { src: "01.jpg", caption: { es: "Visita de estudiantes del máster MDIT al IIS Biobizkaia", en: "Visit of MDIT master's students to IIS Biobizkaia" } },
+        { src: "02.jpg", caption: { es: "«De la señal biológica al circuito», mi artículo en Deusto Ingeniería n.º 27 sobre el proyecto de Electrónica Analógica", en: "“De la señal biológica al circuito” (From biological signal to circuit), my article in Deusto Ingeniería no. 27 on the Analog Electronics project" } }
       ]
     },
     {
@@ -342,8 +346,7 @@ const PORTFOLIO = {
         { src: "02.jpg", caption: { es: "El prototipo, con la estructura de perfiles de aluminio y la mentonera", en: "The prototype, with the aluminum profile structure and the chin rest" } },
         { src: "03.jpg", caption: { es: "Vista general del montaje", en: "Overview of the setup" } },
         { src: "04.jpg", caption: { es: "Diseño CAD del soporte de la cámara", en: "CAD design of the camera mount" } },
-        { src: "05.jpg", caption: { es: "Lámina de diseño de una de las piezas impresas en 3D", en: "Design sheet of one of the 3D-printed parts" } },
-        { src: "hitos/bila-2026/03.jpg", caption: { es: "Programa BILA (2026)", en: "BILA program (2026)" } }
+        { src: "05.jpg", caption: { es: "Lámina de diseño de una de las piezas impresas en 3D", en: "Design sheet of one of the 3D-printed parts" } }
       ]
     },
     {

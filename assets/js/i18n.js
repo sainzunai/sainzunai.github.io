@@ -18,11 +18,11 @@ const LANGUAGES = ["es", "en"];
 
 // textos fijos de index.html en inglés (en español están en el propio html)
 const I18N_HTML_EN = {
-  "meta.title": "Unai Sainz Lugarezaresti · R&D Engineer",
-  "meta.description": "Portfolio and CV of Unai Sainz Lugarezaresti, electronics and computer engineer. R&D in neurotechnology, electronics, data and AI. Bilbao.",
+  "meta.title": "Unai Sainz Lugarezaresti · R&D Engineer and PhD Candidate",
+  "meta.description": "Portfolio and CV of Unai Sainz Lugarezaresti, electronics and computer engineer and PhD candidate in Neuroscience. R&D in neurotechnology, electronics, data and AI. Bilbao.",
   "lang.label": "Language",
 
-  "sidebar.title": "R&D Engineer",
+  "sidebar.title": "R&D Engineer · PhD Candidate",
   "sidebar.more": "Show contacts",
   "contact.linkedinLink": "View profile",
   "contact.languages": "Languages",
