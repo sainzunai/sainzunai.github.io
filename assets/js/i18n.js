@@ -37,7 +37,7 @@ const I18N_HTML_EN = {
   "nav.contact": "Contact",
 
   "about.title": "About me",
-  "about.p1": "I am an Industrial Electronics and Automation Engineer and a Computer Engineer from the University of Deusto, with a Master's in Computing and Intelligent Systems. I work across hardware and software: from designing a PCB or the 3D-printed enclosure of a sensor to training machine learning models and building data analysis pipelines.",
+  "about.p1": "I am an Industrial Electronics and Automation Engineer and a Computer Engineer (double degree) from the University of Deusto, with a Master's in Computing and Intelligent Systems. I work across hardware and software: from designing a PCB or the 3D-printed enclosure of a sensor to training machine learning models and building data analysis pipelines.",
   "about.p2": "I am currently an R&D engineer in the Computational Neuroimaging Group at IIS Biobizkaia, where I apply neuromorphic technology and eye-tracking to the detection and rehabilitation of Alzheimer's and Parkinson's, and I am doing my PhD in Neuroscience at the University of the Basque Country (EHU). I am also an adjunct lecturer at the University of Deusto, where I teach Analog Electronics and Electronic Technology and supervise bachelor's theses.",
   "about.p3": "Outside the lab I like making things with my hands: I 3D print, look after a vegetable garden in my village and enjoy photography and video editing, all self-taught.",
 

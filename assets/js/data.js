@@ -147,7 +147,7 @@ const PORTFOLIO = {
       id: "doctorado",
       title: { es: "Doctorado en Neurociencias", en: "PhD in Neuroscience" },
       org: { es: "Universidad del País Vasco (EHU)", en: "University of the Basque Country (EHU)" },
-      date: "Sep 2025 — Actualidad",
+      date: "Sep 2024 — Actualidad",
       text: {
         es: "Tesis doctoral en curso, desarrollada en el grupo de Neuroimagen Computacional del IIS Biobizkaia. Su pilar central es BegiBrainTool, una toolbox open source para evaluar la función visual y visuocognitiva en enfermedades neurodegenerativas.",
         en: "Ongoing PhD thesis, carried out in the Computational Neuroimaging Group at IIS Biobizkaia. Its central pillar is BegiBrainTool, an open-source toolbox to assess visual and visuocognitive function in neurodegenerative diseases."
