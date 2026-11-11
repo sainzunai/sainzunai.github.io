@@ -3,3 +3,7 @@ input_figuras/
 
 # miniatura de la foto de perfil que genera el script; la web no la usa
 /assets/images/thumbs/
+
+# memoria de conocimiento privada (incluye información confidencial) y su cargador para agentes
+CONOCIMIENTO.md
+CLAUDE.local.md

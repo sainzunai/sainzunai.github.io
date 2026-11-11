@@ -48,10 +48,10 @@ const PORTFOLIO = {
       id: "biobizkaia",
       title: { es: "Ingeniero de I+D (Técnico de apoyo a la investigación)", en: "R&D Engineer (Research Support Technician)" },
       org: { es: "IIS Biobizkaia · Grupo de Neuroimagen Computacional", en: "IIS Biobizkaia · Computational Neuroimaging Group" },
-      date: "Dic 2023 — Actualidad",
+      date: "Ene 2024 — Actualidad",
       text: {
-        es: "Desarrollo software y hardware para ayudar en la detección de enfermedades neurodegenerativas como el Alzheimer y el Parkinson: cámaras de eventos (DVS), eye-trackers, sensores biométricos, electrónica y piezas impresas en 3D, pipelines de análisis de datos en Python y tests computarizados con PsychoPy. De este trabajo nacen los proyectos BEGITRACK, BegiFOV y BegiBrainTool. En este grupo realizo mi tesis doctoral, he colaborado en la organización de congresos y he presentado mi trabajo en congresos internacionales.",
-        en: "I develop software and hardware to help detect neurodegenerative diseases such as Alzheimer's and Parkinson's: event cameras (DVS), eye-trackers, biometric sensors, electronics and 3D-printed parts, Python data analysis pipelines and computerized tests with PsychoPy. This work gave rise to the BEGITRACK, BegiFOV and BegiBrainTool projects. In this group I am doing my PhD, I have helped organize conferences and I have presented my work at international conferences."
+        es: "Bajo la dirección de neurólogos e ingenieros, desarrollo software y hardware para ayudar en la detección de enfermedades neurodegenerativas como el Alzheimer y el Parkinson: cámaras de eventos (DVS), eye-trackers, sensores biométricos, electrónica y piezas impresas en 3D, pipelines de análisis de datos en Python y tests computarizados con PsychoPy. De este trabajo nacen los proyectos BEGITRACK, BegiFOV y BegiBrainTool. En este grupo realizo mi tesis doctoral, he colaborado en la organización de congresos y he presentado mi trabajo en congresos internacionales.",
+        en: "Under the supervision of neurologists and engineers, I develop software and hardware to help detect neurodegenerative diseases such as Alzheimer's and Parkinson's: event cameras (DVS), eye-trackers, biometric sensors, electronics and 3D-printed parts, Python data analysis pipelines and computerized tests with PsychoPy. This work gave rise to the BEGITRACK, BegiFOV and BegiBrainTool projects. In this group I am doing my PhD, I have helped organize conferences and I have presented my work at international conferences."
       },
       photos: [
         { src: "proyectos/begitrack/01.jpg", caption: { es: "Probando el prototipo de BEGITRACK", en: "Testing the BEGITRACK prototype" } },
@@ -73,8 +73,8 @@ const PORTFOLIO = {
       org: { es: "Universidad de Deusto", en: "University of Deusto" },
       date: "Ene 2024 — Actualidad",
       text: {
-        es: "Docente titular de Electrónica Analógica (Grado en Ingeniería Biomédica) y Tecnología Electrónica (Robótica, ITI y Electrónica). Director de múltiples Trabajos de Fin de Grado en distintas titulaciones. En Electrónica Analógica, el alumnado diseña, simula y monta circuitos que captan y procesan señales biológicas reales, como el pulso cardiaco; lo conté en un artículo de la revista Deusto Ingeniería.",
-        en: "Lecturer in charge of Analog Electronics (Biomedical Engineering degree) and Electronic Technology (Robotics, Industrial Technology Engineering and Electronics degrees). Supervisor of many bachelor's theses across several degrees. In Analog Electronics, students design, simulate and build circuits that capture and process real biological signals, such as the heart pulse; I wrote about it in an article in Deusto Ingeniería magazine."
+        es: "Docente titular de Electrónica Analógica (Grado en Ingeniería Biomédica) y Tecnología Electrónica (grados en Robótica, Ingeniería en Tecnologías Industriales y Electrónica), y del módulo de Biosensórica y Física Médica del máster MDIT. Director de múltiples Trabajos de Fin de Grado en distintas titulaciones. En Electrónica Analógica, el alumnado diseña, simula y monta circuitos que captan y procesan señales biológicas reales, como el pulso cardiaco; lo conté en un artículo de la revista Deusto Ingeniería.",
+        en: "Lecturer in charge of Analog Electronics (Biomedical Engineering degree) and Electronic Technology (Robotics, Industrial Technology Engineering and Electronics degrees), and of the Biosensors and Medical Physics module of the MDIT master's program. Supervisor of many bachelor's theses across several degrees. In Analog Electronics, students design, simulate and build circuits that capture and process real biological signals, such as the heart pulse; I wrote about it in an article in Deusto Ingeniería magazine."
       },
       photos: [
         { src: "01.jpg", caption: { es: "Visita de estudiantes del máster MDIT al IIS Biobizkaia", en: "Visit of MDIT master's students to IIS Biobizkaia" } },
@@ -207,7 +207,8 @@ const PORTFOLIO = {
     },
     {
       title: "Design and Validation of an Optimal Mechanical Enclosure for Low-Cost Real-Time Gluten Detection Using NIR Sensor in a Portable Device",
-      date: "2023"
+      date: "2023",
+      url: "https://www.researchgate.net/publication/377010014_Design_and_Validation_of_an_Optimal_Mechanical_Enclosure_for_Low-Cost_Real-Time_Gluten_Detection_Using_NIR_Sensor_in_a_Portable_Device"
     },
     {
       title: "Gluten Analysis Composition Using NIR Spectroscopy and Artificial Intelligence Techniques",
@@ -235,8 +236,8 @@ const PORTFOLIO = {
         en: "Electric motorbike for the Barcelona Smart Moto Challenge. I designed the power and signal distribution PCB."
       },
       text: {
-        es: "Diseño y fabricación de una moto eléctrica entre los departamentos de Mecánica, Diseño, Smart, Empresa y Electrónica para competir en el Barcelona Smart Moto Challenge. Me encargué de crear la PCB de distribución de energía y de señales y fui el contacto entre el equipo y las empresas para buscar patrocinadores y exposiciones. Además, participé en el montaje electrónico y mecánico de la moto junto al resto del equipo, y edité el vídeo del equipo.",
-        en: "Design and manufacture of an electric motorbike by the Mechanical, Design, Smart, Business and Electronics departments to compete in the Barcelona Smart Moto Challenge. I designed the power and signal distribution PCB and was the team's contact with companies to find sponsors and exhibitions. I also took part in the electronic and mechanical assembly of the bike with the rest of the team, and edited the team video."
+        es: "Diseño y fabricación de una moto eléctrica entre los departamentos de Mecánica, Diseño, Smart, Empresa y Electrónica para competir en el Barcelona Smart Moto Challenge. Me encargué de crear la PCB de distribución de energía y de señales y fui el contacto entre el equipo y las empresas para buscar patrocinadores y exposiciones. Además, participé en el montaje electrónico y mecánico de la moto junto al resto del equipo, y edité el vídeo del equipo. En 2021 se convirtió en la primera moto eléctrica española con la transmisión fabricada mediante impresión 3D en metal, gracias a MADIT Metal y a la tecnología de Renishaw.",
+        en: "Design and manufacture of an electric motorbike by the Mechanical, Design, Smart, Business and Electronics departments to compete in the Barcelona Smart Moto Challenge. I designed the power and signal distribution PCB and was the team's contact with companies to find sponsors and exhibitions. I also took part in the electronic and mechanical assembly of the bike with the rest of the team, and edited the team video. In 2021 it became the first Spanish electric motorbike with a transmission made by metal 3D printing, thanks to MADIT Metal and Renishaw's technology."
       },
       videos: [
         { youtube: "DJI5ZQWqFBI", caption: { es: "«¿Cómo trabajamos? UDMT 2020», vídeo editado por mí", en: "“¿Cómo trabajamos? UDMT 2020” (How we work), a video I edited" } }
@@ -264,11 +265,12 @@ const PORTFOLIO = {
         en: "Low-cost device that detects gluten in food by combining a near-infrared sensor with artificial intelligence. My bachelor's thesis, awarded by AECOC and by the Aula Inetum–Deusto."
       },
       text: {
-        es: "Diseño, implementación y validación de una solución tecnológica sensorizada con espectroscopía de infrarrojo cercano para el control de alérgenos, desarrollada en eVIDA Group (DeustoTech). Incluye mediciones de laboratorio para entrenar modelos de machine learning y redes neuronales, una carcasa diseñada en CAD e impresa en 3D y la comunicación del sensor con un sistema embebido. Fue mi Trabajo de Fin de Grado (calificaciones de 9,6 y 9,7) y recibió el primer premio del Premio Académico AECOC en Tecnología Aplicada y el primer premio al mejor TFG del Aula Tecnológica Inetum–Deusto. Después lo presenté en una charla en la conferencia internacional BIOMDLORE 2023 y dio lugar a dos publicaciones.",
-        en: "Design, implementation and validation of a sensor-based technological solution using near-infrared spectroscopy for allergen control, developed at eVIDA Group (DeustoTech). It includes lab measurements to train machine learning models and neural networks, an enclosure designed in CAD and 3D printed, and communication between the sensor and an embedded system. It was my bachelor's thesis (graded 9.6 and 9.7 out of 10) and won first prize in the AECOC Academic Award for Applied Technology and first prize for the best bachelor's thesis of the Aula Tecnológica Inetum–Deusto. I later presented it in a talk at the international conference BIOMDLORE 2023, and it led to two publications."
+        es: "Diseño, implementación y validación de una solución tecnológica sensorizada con espectroscopía de infrarrojo cercano para el control de alérgenos, desarrollada en eVIDA Group (DeustoTech). Incluye mediciones de laboratorio para entrenar modelos de machine learning y redes neuronales, una carcasa diseñada en CAD e impresa en 3D y la comunicación del sensor con un sistema embebido. Fue mi Trabajo de Fin de Grado (calificaciones de 9,6 y 9,7) y recibió el primer premio del Premio Académico AECOC en Tecnología Aplicada y el primer premio al mejor TFG del Aula Tecnológica Inetum–Deusto, y fue finalista del premio al mejor TFG de Ingeniería de Deusto patrocinado por Management Solutions. Después lo presenté en una charla en la conferencia internacional BIOMDLORE 2023 y dio lugar a dos publicaciones.",
+        en: "Design, implementation and validation of a sensor-based technological solution using near-infrared spectroscopy for allergen control, developed at eVIDA Group (DeustoTech). It includes lab measurements to train machine learning models and neural networks, an enclosure designed in CAD and 3D printed, and communication between the sensor and an embedded system. It was my bachelor's thesis (graded 9.6 and 9.7 out of 10) and won first prize in the AECOC Academic Award for Applied Technology and first prize for the best bachelor's thesis of the Aula Tecnológica Inetum–Deusto, and was a finalist for Deusto's best Engineering bachelor's thesis award sponsored by Management Solutions. I later presented it in a talk at the international conference BIOMDLORE 2023, and it led to two publications."
       },
       links: [
-        { label: { es: "Artículo en Telematique (2022)", en: "Article in Telematique (2022)" }, url: "https://www.provinciajournal.com/index.php/telematique/article/view/1031", icon: "document-text-outline" }
+        { label: { es: "Artículo en Telematique (2022)", en: "Article in Telematique (2022)" }, url: "https://www.provinciajournal.com/index.php/telematique/article/view/1031", icon: "document-text-outline" },
+        { label: { es: "Artículo sobre la carcasa (2023)", en: "Article on the enclosure (2023)" }, url: "https://www.researchgate.net/publication/377010014_Design_and_Validation_of_an_Optimal_Mechanical_Enclosure_for_Low-Cost_Real-Time_Gluten_Detection_Using_NIR_Sensor_in_a_Portable_Device", icon: "document-text-outline" }
       ],
       photos: [
         { src: "01.jpg", caption: { es: "El prototipo: carcasa impresa en 3D con el sensor NIR", en: "The prototype: 3D-printed enclosure with the NIR sensor" } },
@@ -573,6 +575,9 @@ const PORTFOLIO = {
         es: "Charla oral en la 14.ª edición de la conferencia internacional BIOMDLORE, celebrada en Białystok (Polonia), sobre el detector portátil de gluten de mi TFG, ya defendido: «Design and Validation of an Optimal Mechanical Enclosure for Low-Cost Real-Time Gluten Detection Using NIR Sensor in a Portable Device». El trabajo se publicó después en una revista.",
         en: "Oral talk at the 14th edition of the international conference BIOMDLORE, held in Białystok (Poland), on the portable gluten detector from my bachelor's thesis, after defending it: “Design and Validation of an Optimal Mechanical Enclosure for Low-Cost Real-Time Gluten Detection Using NIR Sensor in a Portable Device”. The work was later published in a journal."
       },
+      links: [
+        { label: { es: "Ver la publicación", en: "View the publication" }, url: "https://www.researchgate.net/publication/377010014_Design_and_Validation_of_an_Optimal_Mechanical_Enclosure_for_Low-Cost_Real-Time_Gluten_Detection_Using_NIR_Sensor_in_a_Portable_Device", icon: "document-text-outline" }
+      ],
       photos: [
         { src: "01.jpg", caption: { es: "Mi charla en BIOMDLORE 2023", en: "My talk at BIOMDLORE 2023" } },
         { src: "02.jpg", caption: { es: "La sala de la conferencia", en: "The conference room" } }
@@ -608,6 +613,27 @@ const PORTFOLIO = {
       photos: [
         { src: "01.jpg", caption: { es: "Recogiendo el premio", en: "Receiving the award" } },
         { src: "02.jpg", caption: { es: "Foto de grupo de la entrega", en: "Group photo at the ceremony" } }
+      ]
+    },
+    {
+      id: "udmt-impresion-3d-2021",
+      title: { es: "Deusto Moto Team · Transmisión impresa en 3D en metal", en: "Deusto Moto Team · 3D-printed metal transmission" },
+      tag: "Prensa",
+      date: "Mar 2021",
+      icon: "newspaper-outline",
+      text: {
+        es: "Con el Deusto Moto Team construimos la primera moto eléctrica española con la transmisión fabricada mediante impresión 3D en metal. La COVID-19 había cerrado a los proveedores de mecanizado, y MADIT Metal fabricó las piezas con tecnología PBLF (fusión láser en lecho de polvo) de Renishaw. Fuimos el primer equipo universitario en usar fabricación aditiva en la transmisión de su moto para el Barcelona Smart Moto Challenge. El proyecto salió en la prensa del sector y en la revista Deusto Ingeniería.",
+        en: "With the Deusto Moto Team we built the first Spanish electric motorbike with a transmission made by metal 3D printing. COVID-19 had closed the machining suppliers, and MADIT Metal manufactured the parts using Renishaw's PBLF (powder bed laser fusion) technology. We were the first university team to use additive manufacturing in the transmission of its bike for the Barcelona Smart Moto Challenge. The project was covered by industry press and by Deusto Ingeniería magazine."
+      },
+      links: [
+        { label: { es: "Noticia de la Universidad de Deusto", en: "University of Deusto news (in Spanish)" }, url: "https://www.deusto.es/es/inicio/vive/actualidad/noticias/el-deusto-moto-team-construye-con-la-ayuda-de-madit-la-primera-moto-electrica-espanola-con-componentes-impresos-en-3d-de-metal/noticia", icon: "newspaper-outline" },
+        { label: { es: "Caso de éxito de Renishaw", en: "Renishaw case study (in Spanish)" }, url: "https://www.renishaw.com/es/udmt-innovando-en-el-sector-de-la-automocion-gracias-a-la-impresion-3d-metalica-madit-y-la-universidad-de-deusto--46905", icon: "newspaper-outline" },
+        { label: { es: "Noticia en Izaro", en: "Izaro news (in Spanish)" }, url: "https://www.izaro.com/madit-metal-aplica-tecnologia-pblf-de-renishaw-en-la-moto-electrica-de-la-universidad-de-deusto/c-1615391205/", icon: "newspaper-outline" },
+        { label: { es: "Deusto Ingeniería n.º 21 (págs. 18-19)", en: "Deusto Ingeniería no. 21 (pp. 18-19, in Spanish)" }, url: "https://es.slideshare.net/slideshow/deusto-ingeniera-21-ao-2021/241818936", icon: "document-text-outline" }
+      ],
+      photos: [
+        { src: "proyectos/moto-team/03.jpg", caption: { es: "La moto terminada", en: "The finished bike" } },
+        { src: "proyectos/moto-team/05.jpg", caption: { es: "Presentación de la moto", en: "Presenting the bike" } }
       ]
     },
     {
